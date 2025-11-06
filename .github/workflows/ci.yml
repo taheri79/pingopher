@@ -24,5 +24,4 @@ jobs:
         name: build-artifacts
         # Upload both release and debug outputs; change to target/release/** if you only want release builds
         path: |
-          target/release/**
-          target/debug/**
+          target/release/pingopher.exe
