@@ -3,10 +3,6 @@ name: CI
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
-  schedule:
-  - cron: "11 11 * * 6"
 
 env:
   CARGO_TERM_COLOR: always
@@ -18,7 +14,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build
-      run: cargo build --verbose
+    - name: Build (release)
+      run: cargo build --release --verbose
     - name: Run tests
       run: cargo test --verbose
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: build-artifacts
+        # Upload both release and debug outputs; change to target/release/** if you only want release builds
+        path: |
+          target/release/**
+          target/debug/**
